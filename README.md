@@ -24,16 +24,7 @@ OSM-rb exposes two distincts APIs.
 
 The calculator helps you with everything regarding projections, tile names and bounds.
 
-To create a calculator you have to pass it a zoom level, padding and the target map size
-
-```ruby
-padding = OpenStruct.new(x: 50, y: 40)
-target_size = OpenStruct.new(x: 800, y: 600)
-calculator = Calculator.new(padding, target_size)
-```
-
-Once you have created a calculator, you can use it to calculate and set the required zoom
-level to fit your bounds
+You can use the calculator to calculate and set the required zoom level to fit your bounds
 
 ```ruby
 path = [
@@ -41,8 +32,18 @@ path = [
   OpenStruct.new(lat: 46.92771, lng: 7.44610),
   OpenStruct.new(lat: 46.94764, lng: 7.37527)
 ]
-zoom = calculator.zoom_level(path)
-zoom # => 13
+padding = OpenStruct.new(x: 50, y: 40)
+target_size = OpenStruct.new(x: 800, y: 600)
+
+zoom_level = OSM::Calculator.get_zoom_level(path, padding, target_size)
+zoom_level # => 13
+```
+
+Once you know the required zoom level, you can create a calculator. You always need to
+pass it a zoom level, target padding and the target map size
+
+```ruby
+calculator = Calculator.new(padding, target_size)
 ```
 
 Calculate required tiles to fit the map as specified

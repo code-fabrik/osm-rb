@@ -11,7 +11,7 @@ module OSM
       @target_size = target_size
     end
 
-    def zoom_level(path)
+    def self.get_zoom_level(path, padding, target_size)
       18.downto(1) do |level|
         d = Calculator.new(level, padding, target_size)
         path_size = d.path_pixel_dimensions(path)

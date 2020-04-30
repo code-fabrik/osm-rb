@@ -35,8 +35,7 @@ RSpec.describe OSM::Calculator do
   end
 
   it "calculates zoom level" do
-    c = OSM::Calculator.new(5, @padding, @target_size)
-    zoom_level = c.zoom_level(@path)
+    zoom_level = OSM::Calculator.get_zoom_level(@path, @padding, @target_size)
     expect(zoom_level).to eq(13)
   end
 
