@@ -1,9 +1,8 @@
 require 'ostruct'
 
 module OSM
-  TILE_SIZE = 256
-
   class Calculator
+    TILE_SIZE = 256
     attr_reader :zoom, :padding, :target_size
 
     def initialize(zoom, padding, target_size)
@@ -17,7 +16,6 @@ module OSM
         d = Calculator.new(level, padding, target_size)
         path_size = d.path_pixel_dimensions(path)
         if path_size.x + padding.x <= target_size.x && path_size.y + padding.y <= target_size.y
-          # puts "Fit #{path_size} into #{target_size} at zoom level #{level}"
           return level
         end
       end

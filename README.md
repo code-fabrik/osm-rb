@@ -61,6 +61,48 @@ dimensions.x # => 12
 dimensions.y # => 8
 ```
 
+### Exporter
+
+The exporter allows you to donwload and store tile images. It is also able to automatically stitch
+them together.
+
+To create an exporter, you have to pass it an array of tile server url templates and a zoom level
+
+```ruby
+urls = [
+  'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
+  'https://b.tile.opentopomap.org/{z}/{x}/{y}.png',
+  'https://c.tile.opentopomap.org/{z}/{x}/{y}.png'
+]
+zoom_level = 13
+exporter = OSM::Exporter.new(urls, zoom_level)
+```
+
+Download the specified tiles
+
+```ruby
+tiles = [
+  OpenStruct.new(lat: 46.95127, lng: 7.43878),
+  OpenStruct.new(lat: 46.92771, lng: 7.44610),
+  OpenStruct.new(lat: 46.94764, lng: 7.37527)
+]
+images = exporter.download_tiles_as_blob(tiles)
+# images is an array of the binary data of the tiles
+```
+
+You can use any of the compatible [caches for Typhoeus](https://github.com/typhoeus/typhoeus#caching)
+and follow their instructions.
+
+To use a Redis cache
+
+```ruby
+require 'redis'
+redis = Redis.new(...)
+Typhoeus::Config.cache = Typhoeus::Cache::Redis.new(redis)
+```
+
+
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
