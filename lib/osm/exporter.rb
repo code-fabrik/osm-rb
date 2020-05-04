@@ -42,9 +42,18 @@ module OSM
       png
     end
 
-    def draw_line(png, coordinates)
-      str = coordinates.map { |c| "(#{c.x},#{c.y})" }.join(' ')
-      png.polygon(str, ChunkyPNG::Color.rgb(255, 0, 0))
+    def draw_line(png, coordinates, rgb = { r: 255, g: 0, b: 0 })
+      str0 = coordinates.map { |c| "(#{c.x},#{c.y})" }.join(' ')
+      str1 = coordinates.map { |c| "(#{c.x+1},#{c.y})" }.join(' ')
+      str2 = coordinates.map { |c| "(#{c.x},#{c.y+1})" }.join(' ')
+      str3 = coordinates.map { |c| "(#{c.x-1},#{c.y})" }.join(' ')
+      str4 = coordinates.map { |c| "(#{c.x},#{c.y-1})" }.join(' ')
+      s = Time.now.to_f
+      [str0, str1, str2, str3, str4].each do |str|
+        png = png.polygon(str, ChunkyPNG::Color.rgb(rgb[:r], rgb[:g], rgb[:b]))
+      end
+      puts Time.now.to_f - s
+      png
     end
 
     def crop(png, crop_dimensions, target_size)
