@@ -42,6 +42,11 @@ module OSM
       png
     end
 
+    def blend(image1, image2)
+      png = image2.compose(image1)
+      return png
+    end
+
     def draw_line(png, coordinates, rgb = { r: 255, g: 0, b: 0 })
       str0 = coordinates.map { |c| "(#{c.x},#{c.y})" }.join(' ')
       str1 = coordinates.map { |c| "(#{c.x+1},#{c.y})" }.join(' ')
