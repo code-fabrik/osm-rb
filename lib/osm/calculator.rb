@@ -23,10 +23,11 @@ module OSM
     end
 
     def pixels(path)
+      crop = crop_dimensions(path)
       top_left = top_left_tile(path)
       path.map do |point|
         pixel = lat_lng_to_pixel(point)
-        OpenStruct.new(x: pixel.x - (top_left.x * TILE_SIZE), y: pixel.y - (top_left.y * TILE_SIZE))
+        OpenStruct.new(x: pixel.x - (top_left.x * TILE_SIZE) - crop.x, y: pixel.y - (top_left.y * TILE_SIZE) - crop.y)
       end
     end
 
