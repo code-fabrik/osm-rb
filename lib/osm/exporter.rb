@@ -53,11 +53,9 @@ module OSM
       str2 = coordinates.map { |c| "(#{c.x},#{c.y+1})" }.join(' ')
       str3 = coordinates.map { |c| "(#{c.x-1},#{c.y})" }.join(' ')
       str4 = coordinates.map { |c| "(#{c.x},#{c.y-1})" }.join(' ')
-      s = Time.now.to_f
       [str0, str1, str2, str3, str4].each do |str|
         png = png.polygon(str, ChunkyPNG::Color.rgb(rgb[:r], rgb[:g], rgb[:b]))
       end
-      puts Time.now.to_f - s
       png
     end
 

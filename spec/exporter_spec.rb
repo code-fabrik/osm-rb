@@ -12,4 +12,21 @@ RSpec.describe OSM::Exporter do
     expect(images.length).to eq(1)
     expect(images[0]).to eq(@png)
   end
+
+  it "crops image" do
+    path = File.join(File.dirname(__FILE__), 'fixtures/tile.png')
+    image = ChunkyPNG::Image.from_file(path)
+    expect(image.width).to eq(256)
+    expect(image.height).to eq(256)
+
+    exporter = OSM::Exporter.new(nil, nil)
+    image = exporter.crop(image, OpenStruct.new(x: 78, y: 78), OpenStruct.new(x: 100, y: 100))
+
+    expect(image.width).to eq(100)
+    expect(image.height).to eq(100)
+
+    reference_path = File.join(File.dirname(__FILE__), 'fixtures/tile_cropped.png')
+    reference = ChunkyPNG::Image.from_file(reference_path)
+    expect(image.to_rgb_stream).to eq(reference.to_rgb_stream)
+  end
 end
