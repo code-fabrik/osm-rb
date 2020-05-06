@@ -49,6 +49,12 @@ osm.add_path(path)
    .get_blob
 ```
 
+### Additional methods
+
+The builder exposes the following additional methods:
+
+`save(path)`: Stores the resulting image in a PNG file
+
 ## Low level API
 
 The calculator helps you with everything regarding projections, tile names and bounds.
